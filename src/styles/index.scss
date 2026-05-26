@@ -1,0 +1,148 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  height: 100%;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+}
+
+// ============================================================
+// 亮色 / 暗色 CSS 变量
+// ============================================================
+:root {
+  --bg-main: #f0f2f5;
+  --bg-white: #fff;
+  --text-primary: #303133;
+  --text-regular: #606266;
+  --text-secondary: #909399;
+  --text-placeholder: #c0c4cc;
+  --border-base: #dcdfe6;
+  --border-light: #ebeef5;
+  --fill-light: #f5f7fa;
+  --navbar-bg: #fff;
+}
+
+html.dark {
+  --bg-main: #141414;
+  --bg-white: #1d1e1f;
+  --text-primary: #e5e6eb;
+  --text-regular: #c9cdd4;
+  --text-secondary: #86909c;
+  --text-placeholder: #4e5969;
+  --border-base: #2e3033;
+  --border-light: #2e3033;
+  --fill-light: #262729;
+  --navbar-bg: #1d1e1f;
+
+  --el-bg-color: #1d1e1f;
+  --el-bg-color-overlay: #262729;
+  --el-text-color-primary: #e5e6eb;
+  --el-text-color-regular: #c9cdd4;
+  --el-text-color-secondary: #86909c;
+  --el-border-color: #2e3033;
+  --el-border-color-light: #2e3033;
+  --el-fill-color: #262729;
+  --el-fill-color-light: #2a2b2d;
+  --el-fill-color-blank: #1d1e1f;
+}
+
+body { background: var(--bg-main); color: var(--text-primary); }
+
+// ============================================================
+// 滚动条
+// ============================================================
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #c0c4cc; border-radius: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+html.dark ::-webkit-scrollbar-thumb { background: #4e5969; }
+
+// ============================================================
+// 风格一：科技蓝 Tech Blue
+// ============================================================
+html.style-tech {
+  // 侧边栏：深色渐变
+  --sidebar-bg: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --sidebar-bg-solid: #16213e;
+  --sidebar-text: #8892b0;
+  --sidebar-active-bg: rgba(64, 158, 255, 0.15);
+  --sidebar-active-text: #64b5f6;
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.04);
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-logo-text: #e8eaed;
+
+  // 卡片
+  --card-radius: 12px;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --card-bg: #fff;
+  --card-border: none;
+
+  // 通用
+  --content-padding: 20px;
+  --page-heading-weight: 600;
+}
+
+html.dark.style-tech {
+  --card-bg: #1e1f21;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+// ============================================================
+// 风格二：极简白 Minimal White
+// ============================================================
+html.style-minimal {
+  // 侧边栏：纯白
+  --sidebar-bg: #ffffff;
+  --sidebar-bg-solid: #ffffff;
+  --sidebar-text: #6b7280;
+  --sidebar-active-bg: #f3f4f6;
+  --sidebar-active-text: #111827;
+  --sidebar-hover-bg: #f9fafb;
+  --sidebar-border: #e5e7eb;
+  --sidebar-logo-text: #111827;
+
+  // 卡片：扁平边框风格
+  --card-radius: 8px;
+  --card-shadow: none;
+  --card-bg: #fff;
+  --card-border: 1px solid #e5e7eb;
+
+  // 通用
+  --content-padding: 28px;
+  --page-heading-weight: 500;
+}
+
+html.dark.style-minimal {
+  --sidebar-bg: #1a1a1a;
+  --sidebar-bg-solid: #1a1a1a;
+  --sidebar-text: #9ca3af;
+  --sidebar-active-bg: #262626;
+  --sidebar-active-text: #fafafa;
+  --sidebar-hover-bg: #222222;
+  --sidebar-border: #2a2a2a;
+  --sidebar-logo-text: #fafafa;
+
+  --card-bg: #1a1a1a;
+  --card-border: 1px solid #2a2a2a;
+}
+
+// ============================================================
+// 通用卡片样式
+// ============================================================
+.page-card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  border: var(--card-border);
+  padding: var(--content-padding);
+  margin-bottom: 16px;
+}
+
+.page-heading {
+  font-size: 20px;
+  font-weight: var(--page-heading-weight);
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
