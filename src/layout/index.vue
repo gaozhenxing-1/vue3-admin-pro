@@ -148,7 +148,7 @@
       >
         <!-- 购买横幅 -->
         <a
-          href="https://gaospark4.gumroad.com/l/trtbra"
+          href="https://gao892947907.lemonsqueezy.com/checkout/buy/7af63e8e-bb13-4946-bf49-0a080797fc19"
           target="_blank"
           style="display:flex;align-items:center;justify-content:center;height:32px;background:linear-gradient(135deg,#409eff,#7c3aed);color:#fff;text-decoration:none;font-size:12px;font-weight:600;flex-shrink:0;letter-spacing:0.5px"
         >

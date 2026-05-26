@@ -262,7 +262,7 @@ const ja = {
 ## 🛒 Purchase
 
 > [!NOTE]
-> 🔗 🛒 [Buy Now — $49 on Gumroad](https://gaospark4.gumroad.com/l/trtbra)
+> 🔗 🛒 [Buy Now — $49](https://gao892947907.lemonsqueezy.com/checkout/buy/7af63e8e-bb13-4946-bf49-0a080797fc19)
 
 ## 📄 License
 

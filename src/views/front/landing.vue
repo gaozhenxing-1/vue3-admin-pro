@@ -12,7 +12,9 @@
           <el-button type="primary" size="small" round @click="$router.push('/login')">
             Live Demo →
           </el-button>
-          <a href="https://gaospark4.gumroad.com/l/trtbra" target="_blank"
+          <a
+            href="https://gao892947907.lemonsqueezy.com/checkout/buy/7af63e8e-bb13-4946-bf49-0a080797fc19"
+            target="_blank"
             ><el-button size="small" round type="warning">Buy Now — $49</el-button></a
           >
         </div>
@@ -38,7 +40,7 @@
           🚀 Try Live Demo
         </el-button>
         <a
-          href="https://gaospark4.gumroad.com/l/trtbra"
+          href="https://gao892947907.lemonsqueezy.com/checkout/buy/7af63e8e-bb13-4946-bf49-0a080797fc19"
           target="_blank"
           style="text-decoration:none"
           ><el-button size="large" round type="warning">🛒 Buy Now — $49</el-button></a
