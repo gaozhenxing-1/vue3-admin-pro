@@ -143,13 +143,11 @@ import {
   Odometer, DataAnalysis, Grid, Document, User, Avatar, Tickets, Folder, Bell, Setting, EditPen,
 } from '@element-plus/icons-vue'
 import { useI18n, currentLocale } from '@/locales'
-import { useAppStore, useTagsStore, useUserStore } from '@/stores'
+import { useUserStore } from '@/stores'
 import { themes, applyTheme, getSavedTheme, styleModes, applyStyle, getSavedStyle } from '@/utils/theme'
 
 const router = useRouter()
 const route = useRoute()
-const appStore = useAppStore()
-const tagsStore = useTagsStore()
 const userStore = useUserStore()
 const collapsed = ref(false)
 const isDark = ref(false)

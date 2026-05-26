@@ -125,7 +125,6 @@ import { useUserStore } from '@/stores'
 const { t, locale } = useI18n()
 const userStore = useUserStore()
 function hasRole(role: string) { return userStore.roles.includes(role) }
-const lang = computed(() => locale.value)
 
 use([CanvasRenderer, LineChart, BarChart, PieChart, GridComponent, TooltipComponent, LegendComponent])
 

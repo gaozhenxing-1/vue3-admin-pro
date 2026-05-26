@@ -74,7 +74,7 @@ import TextAlign from '@tiptap/extension-text-align'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import { Plus } from '@element-plus/icons-vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { useI18n } from '@/locales'
 const { t } = useI18n()
 

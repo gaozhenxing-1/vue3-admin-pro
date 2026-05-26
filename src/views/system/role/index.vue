@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 import { useI18n } from '@/locales'
 const { t } = useI18n()
 
