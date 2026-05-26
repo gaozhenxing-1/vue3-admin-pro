@@ -9,10 +9,10 @@
           <a @click="$router.push('/pricing')">Pricing</a>
           <a @click="$router.push('/faq')">FAQ</a>
           <a @click="$router.push('/contact')">Contact</a>
-          <el-button type="primary" size="small" round @click="$router.push('/login')"
-            >Live Demo →</el-button
-          >
-          <a href="https://gumroad.com/l/YOUR-LINK" target="_blank"
+          <el-button type="primary" size="small" round @click="$router.push('/login')">
+            Live Demo →
+          </el-button>
+          <a href="https://gaospark4.gumroad.com/l/trtbra" target="_blank"
             ><el-button size="small" round type="warning">Buy Now — $49</el-button></a
           >
         </div>
@@ -37,7 +37,10 @@
         >
           🚀 Try Live Demo
         </el-button>
-        <a href="https://gumroad.com/l/YOUR-LINK" target="_blank" style="text-decoration:none"
+        <a
+          href="https://gaospark4.gumroad.com/l/trtbra"
+          target="_blank"
+          style="text-decoration:none"
           ><el-button size="large" round type="warning">🛒 Buy Now — $49</el-button></a
         >
         <el-button size="large" round @click="$router.push('/pricing')">

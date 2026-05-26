@@ -262,8 +262,7 @@ const ja = {
 ## 🛒 Purchase
 
 > [!NOTE]
-> 🔗 Purchase link coming soon — PayPal registration in progress.
-> Check back or star the repo to get notified.
+> 🔗 🛒 [Buy Now — $49 on Gumroad](https://gaospark4.gumroad.com/l/trtbra)
 
 ## 📄 License
 
