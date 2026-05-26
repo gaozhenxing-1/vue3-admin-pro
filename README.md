@@ -5,7 +5,7 @@
 <h1 align="center">Admin Pro</h1>
 
 <p align="center">
-  A production-ready Vue 3 admin dashboard template with RBAC, i18n, dark mode, 8 color themes, and 20+ pages.
+  A production-ready Vue 3 admin dashboard template with RBAC, i18n, dark mode, 8 color themes, 2 visual styles, Axios + Mock API, and 30+ pages.
 </p>
 
 <p align="center">
@@ -14,6 +14,7 @@
   <img src="https://img.shields.io/badge/typescript-5.6-blue" alt="TypeScript" />
   <img src="https://img.shields.io/badge/element--plus-2.14-409eff" alt="Element Plus" />
   <img src="https://img.shields.io/badge/pinia-3.0-yellow" alt="Pinia" />
+  <img src="https://img.shields.io/badge/eslint-8.57-purple" alt="ESLint" />
   <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" />
 </p>
 
@@ -23,21 +24,23 @@
 
 ### 🎨 UI & UX
 - **8 Preset Color Themes** — Switch themes instantly from the user dropdown
+- **2 Visual Styles** — Tech Blue & Minimal White, each with distinct sidebar, card, and spacing designs
 - **Dark / Light Mode** — Full dark mode support with persistent preference
 - **Collapsible Sidebar** — Icon-only or expanded with smooth animation
 - **Tab Navigation** — Open pages as tabs with keep-alive caching
 - **Breadcrumbs** — Auto-generated breadcrumb trail
-- **Responsive Layout** — Works on desktop and tablet
 
 ### 🌍 Internationalization
 - **Chinese (zh-CN) & English (en-US)** built-in
-- Easy to add more languages — just extend the locale file
+- Easy to add more languages — extend the locale file
 
 ### 🔐 RBAC — Role-Based Access Control
 - **3 roles**: `admin`, `editor`, `guest`
 - **Menu filtering** — Each user only sees authorized routes
-- **Route guards** — Unauthorized access redirects to `/403`
-- **Demo accounts** pre-configured:
+- **Route guards** — Unauthorized access → `/403`
+- **JWT mock auth** — Realistic token generation with expiration & auto-refresh
+- **Remember me** — Persistent login with credential storage
+- **Demo accounts**:
   | Role | Username | Password |
   |------|----------|----------|
   | Super Admin | `admin` | `admin123` |
@@ -45,29 +48,39 @@
   | Guest | `guest` | `guest123` |
 
 ### 📊 Data Visualization
-- **Dashboard** — KPI cards, gauge charts, line charts, bar charts, radar charts
-- **Data Screen** — Full-page 3D visualization with ECharts GL globe
+- **Dashboard** — KPI cards, gauge, line, bar, radar charts
+- **Data Screen** — Full-page 3D globe visualization with ECharts GL
 
 ### 📝 Rich Text Editor
-- **TipTap** editor with toolbar: bold, italic, headings, lists, blockquote, code blocks, text alignment, links, and image upload
+- **TipTap** editor — toolbar with bold, italic, headings, lists, blockquote, code, alignment, links, and image upload
 
 ### 📋 Advanced Table
-- Pagination, search, multi-column filter
-- CSV export, column visibility toggle
-- Batch select & delete
-- Sortable columns
+- Pagination, search, multi-column filter, CSV export
+- Column visibility toggle, batch select & delete, sortable columns
+
+### 🔌 API Layer — Axios + Mock
+- **Axios wrapper** — `src/api/request.ts` with interceptors for token injection & error handling
+- **Mock data layer** — `src/api/mock.ts` with 10+ API route mocks
+- **Toggle via `.env`** — Set `VITE_USE_MOCK=false` and point to your real backend
+- **Structured API modules** — `src/api/modules/` with typed request functions
+
+### 🧹 One-Click Clean
+```bash
+npm run clean
+```
+Removes all demo data (mock endpoints, sample accounts, dashboard data, table rows) so you start with a blank, production-ready project.
 
 ### 🔧 System Management
 - **User Management** — CRUD with role assignment
 - **Role Management** — Define roles & permissions
 - **System Logs** — Operation log viewer
-- **File Manager** — Browse & manage uploaded files
-- **Message Center** — Notification management
+- **File Manager** — Browse & manage files
+- **Message Center** — Notifications with read/unread state
 
 ### 🌐 Front Pages
-- **Landing Page** — Hero section, features, CTA
+- **Landing Page** — Hero, features, demo accounts, CTA
 - **Pricing** — Tiered pricing plans
-- **FAQ** — Accordion-style FAQ
+- **FAQ** — Accordion FAQ
 - **Contact** — Contact form with validation
 
 ---
@@ -82,9 +95,11 @@
 | UI Library | Element Plus 2.14 |
 | State Management | Pinia 3.0 + persistedstate |
 | Router | Vue Router 4.6 |
-| Charts | ECharts 5.6 + vue-echarts |
+| HTTP Client | Axios 1.x |
+| Charts | ECharts 5.6 + vue-echarts 7 |
 | 3D Globe | ECharts GL 2.0 |
 | Rich Text | TipTap 3.x |
+| Code Quality | ESLint 8 + Prettier |
 | CSS | SCSS |
 | Utilities | VueUse 14 |
 
@@ -93,35 +108,42 @@
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - **Node.js** >= 18
 - **npm** >= 9
 
 ### Install & Run
 
 ```bash
-# Clone the project
-git clone https://github.com/your-username/admin-pro.git
-cd admin-pro
-
-# Install dependencies
+git clone https://github.com/gaozhenxing-1/vue3-admin-pro.git
+cd vue3-admin-pro
 npm install
-
-# Start dev server
 npm run dev
 # → http://localhost:5173
 ```
 
-### Build for Production
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server with HMR |
+| `npm run build` | Type-check + production build |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Lint & auto-fix with ESLint |
+| `npm run format` | Format code with Prettier |
+| `npm run clean` | Remove all demo data for a fresh start |
+
+### Switching to Your Backend
 
 ```bash
-npm run build
-# Output: ./dist
-```
+# 1. Edit .env
+VITE_USE_MOCK=false
+VITE_API_BASE_URL=https://your-api.com
 
-### Preview Production Build
+# 2. Clean demo data (optional)
+npm run clean
 
-```bash
-npm run preview
+# 3. Add your API modules in src/api/modules/
 ```
 
 ---
@@ -130,39 +152,51 @@ npm run preview
 
 ```
 admin-pro/
+├── scripts/
+│   └── clean.js              # Demo data cleanup script
 ├── src/
-│   ├── assets/              # Static assets (logo, images)
-│   ├── directives/           # Custom directives (permission)
-│   ├── layout/               # Main layout (sidebar + navbar + content)
-│   │   └── index.vue
-│   ├── locales/              # i18n configuration
+│   ├── api/                   # Axios + Mock API layer
+│   │   ├── request.ts         # Axios instance + interceptors
+│   │   ├── mock.ts            # Mock data & route handlers
+│   │   ├── modules/           # Typed API modules
+│   │   │   ├── user.ts
+│   │   │   └── dashboard.ts
 │   │   └── index.ts
-│   ├── router/               # Routes & guards
+│   ├── assets/                # Static assets
+│   ├── directives/            # Custom directives (permission)
+│   ├── layout/                # Main layout
+│   │   └── index.vue
+│   ├── locales/               # i18n (zh-CN + en-US)
+│   │   └── index.ts
+│   ├── router/                # Routes & guards
 │   │   ├── index.ts
 │   │   └── guard.ts
-│   ├── stores/               # Pinia stores
-│   │   ├── app.ts            # App-level state (theme, sidebar)
-│   │   ├── tags.ts           # Tab management
-│   │   └── user.ts           # Auth & user info
-│   ├── styles/               # Global styles
+│   ├── stores/                # Pinia stores
+│   │   ├── app.ts
+│   │   ├── tags.ts
+│   │   └── user.ts
+│   ├── styles/                # Global SCSS
 │   │   ├── index.scss
 │   │   └── variables.scss
-│   ├── utils/                # Utility functions
-│   │   └── theme.ts          # Color theme definitions
+│   ├── utils/                 # Utilities
+│   │   └── theme.ts           # Theme + style mode system
 │   ├── views/
-│   │   ├── dashboard/        # Dashboard + Data Screen
-│   │   ├── editor/           # Rich text editor (TipTap)
-│   │   ├── error/            # 403, 404 pages
-│   │   ├── form/             # Form example
-│   │   ├── front/            # Landing, Pricing, FAQ, Contact
-│   │   ├── login/            # Login, Register, Forgot password
-│   │   ├── profile/          # User profile
-│   │   ├── settings/         # Settings page
-│   │   ├── system/           # User/Role/Logs/Files/Messages
-│   │   └── table/            # Advanced table
+│   │   ├── dashboard/         # Dashboard + Data Screen
+│   │   ├── editor/            # TipTap rich text editor
+│   │   ├── error/             # 403, 404 pages
+│   │   ├── form/              # Form examples
+│   │   ├── front/             # Landing, Pricing, FAQ, Contact
+│   │   ├── login/             # Login, Register, Forgot
+│   │   ├── profile/           # User profile
+│   │   ├── settings/          # System settings
+│   │   ├── system/            # User/Role/Logs/Files/Messages
+│   │   └── table/             # Advanced table
 │   ├── App.vue
 │   └── main.ts
-├── index.html
+├── .env                       # Environment variables
+├── .env.production            # Production env
+├── .eslintrc.cjs              # ESLint config
+├── .prettierrc                # Prettier config
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
@@ -173,51 +207,55 @@ admin-pro/
 
 ## 🎨 Theme System
 
-8 preset color themes are built-in:
+### 8 Color Themes
 
-| Theme | Primary Color | Preview |
-|-------|---------------|---------|
-| Ocean Blue | `#409EFF` | Clean, professional |
-| Mint Green | `#67C23A` | Fresh, natural |
-| Sunset Orange | `#E6A23C` | Warm, energetic |
-| Rose Red | `#F56C6C` | Bold, passionate |
-| Royal Purple | `#9B59B6` | Elegant, creative |
-| Teal Cyan | `#1ABC9C` | Modern, crisp |
-| Midnight Indigo | `#34495E` | Serious, enterprise |
-| Warm Amber | `#D35400` | Vintage, distinctive |
+| Theme | Primary | Vibe |
+|-------|---------|------|
+| Default Blue | `#409EFF` | Professional |
+| Tech Purple | `#7C3AED` | Creative |
+| Cyan | `#06B6D4` | Modern |
+| Rose | `#F43F5E` | Bold |
+| Amber | `#F59E0B` | Warm |
+| Emerald | `#10B981` | Fresh |
+| Slate | `#64748B` | Serious |
+| Deep Blue | `#1E40AF` | Enterprise |
 
-Switch themes via the **user dropdown menu** (click the avatar in the top-right corner).
+### 2 Visual Styles
+
+| Style | Sidebar | Cards | Feel |
+|-------|---------|-------|------|
+| **Tech Blue** | Dark gradient | Rounded + shadow | SaaS product |
+| **Minimal White** | Pure white + border | Flat + 1px border | Apple/Linear |
+
+Switch both via the **user dropdown menu** (top-right avatar).
 
 ---
 
-## 🔐 RBAC Demo
+## 🔐 RBAC
 
 ```typescript
-// Adding role-based access to a route:
+// Add role-based access to any route:
 {
   path: 'admin-only-page',
   component: () => import('@/views/admin/index.vue'),
-  meta: { roles: ['admin'] }  // ← only admins can see this
+  meta: { roles: ['admin'] }
 }
 ```
 
-The sidebar automatically hides routes the current user doesn't have access to. Direct URL navigation is blocked by the router guard and redirects to `/403`.
+Unauthorized routes are hidden from the sidebar and blocked by the router guard.
 
 ---
 
-## 🌍 Adding a New Language
-
-1. Add your locale object in `src/locales/index.ts`:
+## 🌍 i18n
 
 ```typescript
+// Add a language in src/locales/index.ts:
 const ja = {
   dashboard: 'ダッシュボード',
   tableExample: 'テーブル例',
-  // ... all keys
+  // ...
 }
 ```
-
-2. Register it in the `locales` map and add a toggle button in the layout.
 
 ---
 
@@ -229,7 +267,7 @@ MIT — free for personal and commercial use.
 
 ## 🙋 Support
 
-For questions, bug reports, or customization requests, please open a GitHub issue or contact the author.
+Questions or customization requests? Open a GitHub issue or contact the author.
 
 ---
 
