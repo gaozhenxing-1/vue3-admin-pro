@@ -259,6 +259,12 @@ const ja = {
 
 ---
 
+## 🛒 Purchase
+
+> [!NOTE]
+> 🔗 Purchase link coming soon — PayPal registration in progress.
+> Check back or star the repo to get notified.
+
 ## 📄 License
 
 MIT — free for personal and commercial use.
