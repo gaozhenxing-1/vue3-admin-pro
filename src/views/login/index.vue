@@ -10,7 +10,7 @@
     <div class="login-card">
       <!-- Logo -->
       <div class="login-header">
-        <img src="@/assets/logo.svg" class="login-logo" alt="logo" />
+        <img src="@/assets/logo.svg" class="login-logo" alt="logo">
         <h1 class="login-title">Admin Pro</h1>
         <p class="login-subtitle">{{ t('loginSubtitle') }}</p>
       </div>
@@ -81,6 +81,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores'
+import { loginApi } from '@/api'
 import { useI18n, currentLocale } from '@/locales'
 const { t } = useI18n()
 
@@ -116,32 +117,17 @@ function fillDemo(acc: typeof demoAccounts[0]) {
   loginForm.role = acc.role
 }
 
-// 生成模拟 JWT token（含过期时间）
-function generateToken(role: string): string {
-  const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
-  const now = Math.floor(Date.now() / 1000)
-  const payload = btoa(JSON.stringify({
-    sub: loginForm.username,
-    role,
-    iat: now,
-    exp: now + 7200, // 2小时过期
-  }))
-  const sig = btoa(`${header}.${payload}.mock-secret`)
-  return `${header}.${payload}.${sig}`
-}
-
-function handleLogin() {
-  loginFormRef.value?.validate((valid) => {
+async function handleLogin() {
+  loginFormRef.value?.validate(async (valid) => {
     if (!valid) return
     loading.value = true
 
-    // 模拟网络延迟
-    setTimeout(() => {
+    try {
+      const result = await loginApi({ username: loginForm.username, password: loginForm.password })
       loading.value = false
 
-      const token = generateToken(loginForm.role)
+      userStore.login(result.token, result.userInfo)
 
-      // 记住密码
       if (rememberMe.value) {
         localStorage.setItem('rememberedAccount', JSON.stringify({
           username: loginForm.username,
@@ -152,19 +138,11 @@ function handleLogin() {
         localStorage.removeItem('rememberedAccount')
       }
 
-      userStore.login(token, {
-        id: 1,
-        username: loginForm.username,
-        nickname: loginForm.role === 'admin' ? '管理员' : loginForm.role === 'editor' ? '编辑' : '访客',
-        avatar: '',
-        email: loginForm.username + '@example.com',
-        roles: [loginForm.role],
-        tokenExp: Date.now() + 7200 * 1000,
-      })
-
       ElMessage.success(t('loginSuccess'))
       router.push('/dashboard')
-    }, 800)
+    } catch {
+      loading.value = false
+    }
   })
 }
 

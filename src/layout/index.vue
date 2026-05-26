@@ -10,7 +10,7 @@
       @select="handleSelect"
     >
       <div style="height:50px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid var(--sidebar-border, rgba(255,255,255,0.08));overflow:hidden">
-        <img src="@/assets/logo.svg" style="width:28px;height:28px;flex-shrink:0" />
+        <img src="@/assets/logo.svg" style="width:28px;height:28px;flex-shrink:0">
         <span v-show="!collapsed" style="margin-left:12px;color:var(--sidebar-logo-text, #fff);font-size:16px;font-weight:600;white-space:nowrap">Admin Pro</span>
       </div>
       <el-menu-item v-for="r in menuRoutes" :key="r.path" :index="'/' + r.path">
@@ -47,13 +47,13 @@
                     <div
                       v-for="c in themes"
                       :key="c.primary"
-                      @click="switchTheme(c.primary)"
                       :style="{
                         width:'28px',height:'28px',borderRadius:'50%',background:c.primary,cursor:'pointer',
                         border: currentTheme === c.primary ? '3px solid var(--text-primary)' : '2px solid transparent',
                         margin:'0 auto',
                       }"
                       :title="lang === 'zh-cn' ? c.nameCN : c.name"
+                      @click="switchTheme(c.primary)"
                     />
                   </div>
                 </div>
@@ -68,9 +68,11 @@
                     <el-button
                       v-for="s in styleModes" :key="s.key"
                       :type="currentStyle === s.key ? 'primary' : 'default'"
-                      size="small" @click="switchStyle(s.key)"
-                      style="flex:1;font-size:12px"
-                    >{{ s.icon }} {{ lang === 'zh-cn' ? s.nameCN : s.name }}</el-button>
+                      size="small" style="flex:1;font-size:12px"
+                      @click="switchStyle(s.key)"
+                    >
+                      {{ s.icon }} {{ lang === 'zh-cn' ? s.nameCN : s.name }}
+                    </el-button>
                   </div>
                 </div>
                 <el-divider style="margin:8px 0" />
@@ -110,18 +112,18 @@
 
       <div v-if="visitedTags.length > 0" style="display:flex;align-items:center;height:36px;background:var(--navbar-bg,#fff);border-top:1px solid var(--border-light,#ebeef5);padding:0 8px;flex-shrink:0;gap:2px;overflow:hidden">
         <div
-          v-for="tag in visitedTags" :key="tag.path" @click="router.push(tag.path)" @contextmenu.prevent
-          :style="{
+          v-for="tag in visitedTags" :key="tag.path" :style="{
             padding:'0 10px',height:'28px',fontSize:'12px',borderRadius:'4px',cursor:'pointer',whiteSpace:'nowrap',display:'flex',alignItems:'center',gap:'4px',
             background: tag.path === route.path ? 'var(--el-color-primary-light-9)' : 'var(--fill-light,#f5f5f5)',
             color: tag.path === route.path ? 'var(--el-color-primary)' : 'var(--text-secondary,#909399)',
             border: '1px solid ' + (tag.path === route.path ? 'var(--el-color-primary-light-5)' : 'var(--border-light,#ebeef5)'),
-          }"
+          }" @click="router.push(tag.path)"
+          @contextmenu.prevent
         >
           <span>{{ t(tag.title) }}</span>
-          <span v-if="tag.path !== '/dashboard'" @click.stop="removeTag(tag.path)" style="font-size:10px;line-height:1;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center">✕</span>
+          <span v-if="tag.path !== '/dashboard'" style="font-size:10px;line-height:1;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center" @click.stop="removeTag(tag.path)">✕</span>
         </div>
-        <span @click="visitedTags = visitedTags.filter(t => t.path === '/dashboard')" style="cursor:pointer;font-size:12px;color:var(--text-secondary,#909399);margin-left:4px;flex-shrink:0">✕</span>
+        <span style="cursor:pointer;font-size:12px;color:var(--text-secondary,#909399);margin-left:4px;flex-shrink:0" @click="visitedTags = visitedTags.filter(t => t.path === '/dashboard')">✕</span>
       </div>
 
       <div style="flex:1;padding:16px;overflow-y:auto;background:var(--bg-main,#f0f2f5)">

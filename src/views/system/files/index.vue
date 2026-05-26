@@ -33,7 +33,7 @@
             <Document v-else />
           </el-icon>
           <div class="file-name">{{ item.name }}</div>
-          <div class="file-meta" v-if="!item.isDir">{{ item.size }}</div>
+          <div v-if="!item.isDir" class="file-meta">{{ item.size }}</div>
           <div class="file-actions">
             <el-button link size="small" @click.stop="ElMessage.info('预览 ' + item.name)">{{ t('preview') }}</el-button>
             <el-button link size="small" @click.stop="ElMessage.info('下载 ' + item.name)">{{ t('download') }}</el-button>

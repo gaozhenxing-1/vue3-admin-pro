@@ -6,7 +6,7 @@
           <span>{{ t('messageCenter') }}</span>
           <div>
             <el-badge :value="unreadCount" :hidden="unreadCount === 0" class="badge">
-              <el-button size="small" @click="markAllRead" :disabled="unreadCount === 0">
+              <el-button size="small" :disabled="unreadCount === 0" @click="markAllRead">
                 {{ t('markAllRead') }}
               </el-button>
             </el-badge>

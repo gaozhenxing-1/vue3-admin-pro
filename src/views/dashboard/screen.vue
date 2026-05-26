@@ -27,7 +27,8 @@
 
       <div class="bottom-row">
         <div class="panel panel-5"><div class="panel-head"><span class="dot dot-purple" />{{ t('regionSales') }}</div><v-chart :option="bar3DOption" autoresize /></div>
-        <div class="panel panel-5"><div class="panel-head"><span class="dot dot-red" />{{ t('salesRank') }}</div>
+        <div class="panel panel-5">
+          <div class="panel-head"><span class="dot dot-red" />{{ t('salesRank') }}</div>
           <div class="rank-list">
             <div v-for="(item, i) in rankList" :key="i" class="rank-item">
               <span class="rank-num" :class="'top' + (i + 1)">{{ i + 1 }}</span>

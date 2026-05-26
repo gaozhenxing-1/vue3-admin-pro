@@ -12,7 +12,7 @@
         </el-button>
       </div>
 
-      <el-table :data="tableData" border stripe style="width: 100%; margin-top: 16px" v-loading="loading">
+      <el-table v-loading="loading" :data="tableData" border stripe style="width: 100%; margin-top: 16px">
         <el-table-column type="index" :label="'#'" width="55" />
         <el-table-column prop="username" :label="t('username')" width="120" />
         <el-table-column prop="nickname" :label="t('nickname')" width="120" />

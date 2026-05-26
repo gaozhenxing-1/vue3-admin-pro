@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <el-table :data="tableData" border stripe style="width: 100%; margin-top: 16px" v-loading="loading" max-height="520">
+      <el-table v-loading="loading" :data="tableData" border stripe style="width: 100%; margin-top: 16px" max-height="520">
         <el-table-column type="index" width="55" />
         <el-table-column :label="t('logType')" width="110">
           <template #default="{ row }">

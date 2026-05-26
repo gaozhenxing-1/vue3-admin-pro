@@ -6,10 +6,11 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import App from './App.vue'
 import router from './router'
 import { initTheme } from './utils/theme'
+import { initMock } from './api'
 import './styles/index.scss'
 
 // 在挂载前初始化主题，避免闪烁
-initTheme()
+initTheme(); initMock()
 
 const app = createApp(App)
 const pinia = createPinia()

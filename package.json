@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clean": "node scripts/clean.js",
+    "lint": "eslint src --ext .vue,.ts --fix",
+    "format": "prettier --write \"src/**/*.{vue,ts,scss}\""
   },
   "dependencies": {
     "@tiptap/extension-image": "^3.23.6",
@@ -17,6 +20,7 @@
     "@tiptap/starter-kit": "^3.23.6",
     "@tiptap/vue-3": "^3.23.6",
     "@vueuse/core": "^14.3.0",
+    "axios": "^1.16.1",
     "echarts": "^5.6.0",
     "echarts-gl": "^2.0.9",
     "element-plus": "^2.14.0",
@@ -29,6 +33,10 @@
   "devDependencies": {
     "@types/node": "^25.9.1",
     "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/eslint-config-typescript": "^14.7.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-vue": "^9.33.0",
+    "prettier": "^3.8.3",
     "sass": "^1.99.0",
     "typescript": "~5.6.2",
     "vite": "^5.4.10",

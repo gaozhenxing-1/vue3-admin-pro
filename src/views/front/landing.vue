@@ -17,7 +17,7 @@
     <!-- Hero -->
     <section id="hero" class="hero">
       <div class="hero-badge">🎉 Vue 3 + Element Plus • Production Ready</div>
-      <h1>Ship Your <span class="gradient">Admin Dashboard</span><br/>in Minutes, Not Weeks</h1>
+      <h1>Ship Your <span class="gradient">Admin Dashboard</span><br>in Minutes, Not Weeks</h1>
       <p>A premium Vue 3 admin template with 30+ pages, 8 themes, RBAC, and full i18n — everything you need to launch fast.</p>
       <div class="hero-btns">
         <el-button type="primary" size="large" round class="btn-glow" @click="$router.push('/login')">
@@ -102,7 +102,7 @@
       <div class="footer-inner">
         <div>
           <span class="footer-logo">⚡ Admin Pro</span>
-          <p class="footer-desc">Production-ready Vue 3 admin template.<br/>Built by developers, for developers.</p>
+          <p class="footer-desc">Production-ready Vue 3 admin template.<br>Built by developers, for developers.</p>
         </div>
         <div class="footer-links">
           <strong>Product</strong>

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-        <!-- 权限演示 -->
+    <!-- 权限演示 -->
     <el-alert type="info" :closable="false" style="margin-bottom:16px" show-icon>
       <template #title>
         <span>🔐 RBAC Demo — Current Role: <b>{{ userStore.roles[0] }}</b></span>
@@ -14,7 +14,7 @@
     </el-alert>
 
     <el-row :gutter="16">
-      <el-col :xs="24" :sm="12" :lg="6" v-for="card in statsCards" :key="card.key">
+      <el-col v-for="card in statsCards" :key="card.key" :xs="24" :sm="12" :lg="6">
         <el-card shadow="hover" class="stat-card">
           <div class="stat-content">
             <div class="stat-info">
@@ -113,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive } from 'vue'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { LineChart, BarChart, PieChart } from 'echarts/charts'
@@ -122,7 +122,7 @@ import VChart from 'vue-echarts'
 import { User, ShoppingCart, DataAnalysis, Tickets, CaretTop, CaretBottom } from '@element-plus/icons-vue'
 import { useI18n } from '@/locales'
 import { useUserStore } from '@/stores'
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const userStore = useUserStore()
 function hasRole(role: string) { return userStore.roles.includes(role) }
 
