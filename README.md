@@ -15,7 +15,7 @@
   <img src="https://img.shields.io/badge/element--plus-2.14-409eff" alt="Element Plus" />
   <img src="https://img.shields.io/badge/pinia-3.0-yellow" alt="Pinia" />
   <img src="https://img.shields.io/badge/eslint-8.57-purple" alt="ESLint" />
-  <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" />
+  <img src="https://img.shields.io/badge/license-dual-blue" alt="MIT License" />
 </p>
 
 ---
@@ -266,8 +266,13 @@ const ja = {
 
 ## 📄 License
 
-MIT — free for personal and commercial use.
 
+**Dual License**
+
+• 🆓 **Personal / Open Source use** — MIT license. Free to use, modify, and learn from.
+• 💰 **Commercial use** — Requires a [paid license](https://gao892947907.lemonsqueezy.com/checkout/buy/7af63e8e-bb13-4946-bf49-0a080797fc19) ($49).
+
+> Using Admin Pro in a company project, client work, or commercial product? Please purchase a license to support ongoing development.
 ---
 
 ## 🙋 Support
