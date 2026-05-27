@@ -6,14 +6,14 @@
           v-model="filters.name"
           :placeholder="t('nickname')"
           clearable
-          style="width:160px"
+          style="width: 160px"
           @change="fetchData"
         />
         <el-select
           v-model="filters.role"
           :placeholder="t('role')"
           clearable
-          style="width:140px"
+          style="width: 140px"
           @change="fetchData"
         >
           <el-option :label="t('admin')" value="admin" /><el-option
@@ -25,7 +25,7 @@
           v-model="filters.status"
           :placeholder="t('status')"
           clearable
-          style="width:120px"
+          style="width: 120px"
           @change="fetchData"
         >
           <el-option :label="t('enabled')" value="active" /><el-option
@@ -39,22 +39,23 @@
       <div class="action-bar">
         <div class="action-left">
           <el-popover placement="bottom-start" :width="200" trigger="click">
-            <template #reference
-              ><el-button size="small"
-                >{{ t('columnFilter') }} <el-icon><ArrowDown /></el-icon></el-button
-            ></template>
+            <template #reference>
+              <el-button size="small">
+                {{ t('columnFilter') }} <el-icon><ArrowDown /></el-icon>
+              </el-button>
+            </template>
             <el-checkbox-group
               v-model="visibleCols"
-              style="display:flex;flex-direction:column;gap:6px"
+              style="display: flex; flex-direction: column; gap: 6px"
             >
-              <el-checkbox v-for="col in allColumns" :key="col.key" :label="col.key">{{
-                col.label
-              }}</el-checkbox>
+              <el-checkbox v-for="col in allColumns" :key="col.key" :label="col.key">
+                {{ col.label }}
+              </el-checkbox>
             </el-checkbox-group>
           </el-popover>
           <span
             v-if="selectedRows.length"
-            style="margin-left:12px;font-size:13px;color:var(--text-secondary,#909399)"
+            style="margin-left: 12px; font-size: 13px; color: var(--text-secondary, #909399)"
           >
             {{
               lang === 'zh-cn'
@@ -65,13 +66,15 @@
         </div>
         <div class="action-right">
           <el-button
+            v-permission="['admin']"
             size="small"
             type="danger"
             plain
             :disabled="!selectedRows.length"
             @click="batchDelete"
-            >{{ t('batchDelete') }}</el-button
           >
+            {{ t('batchDelete') }}
+          </el-button>
           <el-button size="small" @click="exportExcel">{{ t('export') }} Excel</el-button>
           <el-button size="small" @click="importExcel">{{ t('import') }} Excel</el-button>
         </div>
@@ -82,8 +85,8 @@
         border
         stripe
         row-key="id"
-        style="width:100%;margin-top:12px"
-        @selection-change="(rows: any[]) => selectedRows = rows"
+        style="width: 100%; margin-top: 12px"
+        @selection-change="(rows: any[]) => (selectedRows = rows)"
       >
         <el-table-column type="selection" width="45" fixed="left" />
         <el-table-column type="index" :label="'#'" width="55" />
@@ -109,8 +112,8 @@
                 row.role === 'admin'
                   ? t('admin')
                   : row.role === 'editor'
-                  ? t('editor')
-                  : t('normalUser')
+                    ? t('editor')
+                    : t('normalUser')
               }}
             </el-tag>
           </template>
@@ -121,7 +124,7 @@
           width="80"
           align="center"
         >
-          <template #default="{ row }"><el-switch v-model="row.status" size="small"/></template>
+          <template #default="{ row }"><el-switch v-model="row.status" size="small" /></template>
         </el-table-column>
         <el-table-column
           v-if="visibleCols.includes('phone')"
@@ -139,15 +142,23 @@
         <el-table-column :label="t('actions')" width="120" fixed="right">
           <template #default="{ row }">
             <el-button
+              v-permission="['admin', 'editor']"
               type="primary"
               link
               size="small"
               @click="ElMessage.info('编辑 ' + row.name)"
-              >{{ t('edit') }}</el-button
             >
-            <el-button type="danger" link size="small" @click="deleteRow(row)">{{
-              t('delete')
-            }}</el-button>
+              {{ t('edit') }}
+            </el-button>
+            <el-button
+              v-permission="['admin']"
+              type="danger"
+              link
+              size="small"
+              @click="deleteRow(row)"
+            >
+              {{ t('delete') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -167,13 +178,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { exportExcel as exportExcelUtil, importExcel as importExcelUtil } from '@/utils/excel'
 import { useI18n } from '@/locales'
-const { t, locale } = useI18n()
-const lang = computed(() => locale.value)
+import { exportExcel as xlsxExport, importExcel as xlsxImport } from '@/utils/excel'
+const { t } = useI18n()
 
 interface Row {
   id: number
@@ -261,25 +271,41 @@ function batchDelete() {
     fetchData()
   })
 }
-function exportCSV() {
+function exportExcel() {
   const cols = visibleCols.value
-  const rows = tableData.value.map((r) =>
-    cols
-      .map((c) => {
-        const v = (r as any)[c]
-        return typeof v === 'boolean' ? (v ? 'Y' : 'N') : v
-      })
-      .join(','),
-  )
-  const csv = ['\uFEFF' + cols.join(','), ...rows].join('\n')
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
-  const a = document.createElement('a')
-  a.href = URL.createObjectURL(blob)
-  a.download = `export-${Date.now()}.csv`
-  a.click()
-  URL.revokeObjectURL(a.href)
-  ElMessage.success('导出成功')
+  const rows = tableData.value.map((r) => {
+    const obj: Record<string, any> = {}
+    cols.forEach((c) => {
+      obj[c] = (r as any)[c]
+    })
+    return obj
+  })
+  xlsxExport(rows, `table-export-${Date.now()}`)
+  ElMessage.success('Excel exported')
 }
+async function importExcel() {
+  try {
+    const data = await xlsxImport<Record<string, any>>()
+    if (data.length > 0) {
+      data.forEach((row: any, i: number) => {
+        allData.push({
+          id: allData.length + 1,
+          name: row.name || row.nickname || `Imported-${i + 1}`,
+          email: row.email || '',
+          role: row.role || 'user',
+          status: row.status !== 'disabled',
+          phone: row.phone || '',
+          created: row.created || new Date().toISOString().slice(0, 10),
+        })
+      })
+      fetchData()
+      ElMessage.success(`Imported ${data.length} rows`)
+    }
+  } catch {
+    // user cancelled
+  }
+}
+
 onMounted(fetchData)
 </script>
 

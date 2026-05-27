@@ -4,9 +4,13 @@
   box-sizing: border-box;
 }
 
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
-  font-family: 'Inter', 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  font-family:
+    'Inter', 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    Arial, sans-serif;
 }
 
 // ============================================================
@@ -49,15 +53,28 @@ html.dark {
   --el-fill-color-blank: #1d1e1f;
 }
 
-body { background: var(--bg-main); color: var(--text-primary); }
+body {
+  background: var(--bg-main);
+  color: var(--text-primary);
+}
 
 // ============================================================
 // 滚动条
 // ============================================================
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-thumb { background: #c0c4cc; border-radius: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-html.dark ::-webkit-scrollbar-thumb { background: #4e5969; }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c0c4cc;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #4e5969;
+}
 
 // ============================================================
 // 风格一：科技蓝 Tech Blue

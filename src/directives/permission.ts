@@ -1,14 +1,14 @@
-import type { Directive, DirectiveBinding } from 'vue'
+import type { Directive } from 'vue'
 import { useUserStore } from '@/stores/user'
 
-// v-permission: 传入角色数组，用户拥有任一角色即显示
-export const vPermission: Directive<HTMLElement, string[]> = {
-  mounted(el: HTMLElement, binding: DirectiveBinding<string[]>) {
+export const permission: Directive = {
+  mounted(el, binding) {
     const userStore = useUserStore()
-    const required = binding.value
-    if (required && required.length > 0) {
-      const has = required.some(r => userStore.roles.includes(r))
-      if (!has) {
+    const requiredRoles = binding.value as string[]
+
+    if (requiredRoles && requiredRoles.length > 0) {
+      const hasPermission = requiredRoles.some((role) => userStore.roles.includes(role))
+      if (!hasPermission) {
         el.parentNode?.removeChild(el)
       }
     }

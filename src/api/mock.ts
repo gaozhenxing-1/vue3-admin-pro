@@ -11,7 +11,6 @@
  */
 import type { AxiosInstance } from 'axios'
 
-
 // ─── Mock 数据定义 ───
 
 const dashboardData = {
@@ -35,8 +34,26 @@ const dashboardData = {
   ],
   recentOrders: Array.from({ length: 8 }, (_, i) => ({
     id: `ORD-${String(20260001 + i)}`,
-    customer: ['Alice Chen', 'Bob Wang', 'Carol Li', 'David Zhang', 'Eve Liu', 'Frank Wu', 'Grace Sun', 'Henry Zhao'][i],
-    product: ['MacBook Pro', 'iPhone 15', 'AirPods Pro', 'iPad Air', 'Apple Watch', 'Magic Keyboard', 'Studio Display', 'Mac Mini'][i],
+    customer: [
+      'Alice Chen',
+      'Bob Wang',
+      'Carol Li',
+      'David Zhang',
+      'Eve Liu',
+      'Frank Wu',
+      'Grace Sun',
+      'Henry Zhao',
+    ][i],
+    product: [
+      'MacBook Pro',
+      'iPhone 15',
+      'AirPods Pro',
+      'iPad Air',
+      'Apple Watch',
+      'Magic Keyboard',
+      'Studio Display',
+      'Mac Mini',
+    ][i],
     amount: [12999, 8999, 1999, 4999, 3499, 1199, 11499, 4599][i],
     status: ['paid', 'shipped', 'pending', 'paid', 'shipped', 'refunded', 'paid', 'pending'][i],
     date: `2026-05-${String(20 - i).padStart(2, '0')}`,
@@ -54,9 +71,30 @@ const tableData = Array.from({ length: 50 }, (_, i) => ({
 }))
 
 const mockUsers = [
-  { id: 1, username: 'admin', nickname: '管理员', email: 'admin@example.com', role: 'admin', status: 'enabled' },
-  { id: 2, username: 'editor', nickname: '编辑', email: 'editor@example.com', role: 'editor', status: 'enabled' },
-  { id: 3, username: 'guest', nickname: '访客', email: 'guest@example.com', role: 'guest', status: 'enabled' },
+  {
+    id: 1,
+    username: 'admin',
+    nickname: '管理员',
+    email: 'admin@example.com',
+    role: 'admin',
+    status: 'enabled',
+  },
+  {
+    id: 2,
+    username: 'editor',
+    nickname: '编辑',
+    email: 'editor@example.com',
+    role: 'editor',
+    status: 'enabled',
+  },
+  {
+    id: 3,
+    username: 'guest',
+    nickname: '访客',
+    email: 'guest@example.com',
+    role: 'guest',
+    status: 'enabled',
+  },
   ...Array.from({ length: 27 }, (_, i) => ({
     id: i + 4,
     username: `user${i + 4}`,
@@ -68,9 +106,41 @@ const mockUsers = [
 ]
 
 const mockRoles = [
-  { id: 1, name: '超级管理员', code: 'admin', desc: '拥有所有权限', userCount: 1, permissions: ['dashboard', 'table', 'form', 'editor', 'user', 'role', 'logs', 'files', 'messages', 'settings'] },
-  { id: 2, name: '编辑', code: 'editor', desc: '内容管理权限', userCount: 12, permissions: ['dashboard', 'table', 'form', 'editor', 'logs', 'files', 'messages'] },
-  { id: 3, name: '访客', code: 'guest', desc: '只读权限', userCount: 17, permissions: ['dashboard'] },
+  {
+    id: 1,
+    name: '超级管理员',
+    code: 'admin',
+    desc: '拥有所有权限',
+    userCount: 1,
+    permissions: [
+      'dashboard',
+      'table',
+      'form',
+      'editor',
+      'user',
+      'role',
+      'logs',
+      'files',
+      'messages',
+      'settings',
+    ],
+  },
+  {
+    id: 2,
+    name: '编辑',
+    code: 'editor',
+    desc: '内容管理权限',
+    userCount: 12,
+    permissions: ['dashboard', 'table', 'form', 'editor', 'logs', 'files', 'messages'],
+  },
+  {
+    id: 3,
+    name: '访客',
+    code: 'guest',
+    desc: '只读权限',
+    userCount: 17,
+    permissions: ['dashboard'],
+  },
 ]
 
 // ─── Mock 适配器（无外部依赖） ───
@@ -85,7 +155,15 @@ class MockAdapter {
       const url = `${config.method?.toUpperCase()}:${config.url}`
       const handler = this.routes.get(url)
       if (handler) {
-        const mockResponse = handler(config.params || JSON.parse(config.data || '{}'))
+        let body = config.data
+        if (typeof body === 'string') {
+          try {
+            body = JSON.parse(body)
+          } catch {
+            body = {}
+          }
+        }
+        const mockResponse = handler(config.params || body || {})
         // 直接返回 mock 数据，取消真实请求
         const adapter = config.adapter
         config.adapter = () =>
@@ -97,7 +175,9 @@ class MockAdapter {
             config,
           })
         // 恢复原始 adapter（避免影响后续请求）
-        setTimeout(() => { config.adapter = adapter }, 0)
+        setTimeout(() => {
+          config.adapter = adapter
+        }, 0)
       }
       return config
     })
@@ -131,18 +211,15 @@ export function setupMock(axiosInstance: AxiosInstance) {
     const user = mockUsers.find((u) => u.username === username)
     if (!user) return { code: 401, message: '用户不存在' }
     return {
-      code: 0,
-      data: {
-        token: `mock-jwt-${user.role}-${Date.now()}`,
-        userInfo: {
-          id: user.id,
-          username: user.username,
-          nickname: user.nickname,
-          email: user.email,
-          avatar: '',
-          roles: [user.role],
-          tokenExp: Date.now() + 7200000,
-        },
+      token: `mock-jwt-${user.role}-${Date.now()}`,
+      userInfo: {
+        id: user.id,
+        username: user.username,
+        nickname: user.nickname,
+        email: user.email,
+        avatar: '',
+        roles: [user.role],
+        tokenExp: Date.now() + 7200000,
       },
     }
   })
@@ -157,7 +234,9 @@ export function setupMock(axiosInstance: AxiosInstance) {
   mock.onGet('/api/users', (params) => {
     let list = [...mockUsers]
     if (params?.keyword) {
-      list = list.filter((u) => u.username.includes(params.keyword) || u.email?.includes(params.keyword))
+      list = list.filter(
+        (u) => u.username.includes(params.keyword) || u.email?.includes(params.keyword),
+      )
     }
     if (params?.status) {
       list = list.filter((u) => u.status === params.status)
@@ -181,7 +260,9 @@ export function setupMock(axiosInstance: AxiosInstance) {
   mock.onGet('/api/table/list', (params) => {
     let list = [...tableData]
     if (params?.keyword) {
-      list = list.filter((r) => r.username.includes(params.keyword) || r.nickname.includes(params.keyword))
+      list = list.filter(
+        (r) => r.username.includes(params.keyword) || r.nickname.includes(params.keyword),
+      )
     }
     const page = params?.page || 1
     const pageSize = params?.pageSize || 10
@@ -203,10 +284,38 @@ export function setupMock(axiosInstance: AxiosInstance) {
   // 消息列表
   mock.onGet('/api/messages', () => ({
     list: [
-      { id: 1, title: '系统更新通知', content: 'Admin Pro V2.0 已发布，新增多项功能', time: '2026-05-26 14:30', read: false, type: 'info' },
-      { id: 2, title: '安全提醒', content: '检测到异常登录，请确认是否为本人操作', time: '2026-05-25 09:15', read: false, type: 'warning' },
-      { id: 3, title: '任务完成', content: '数据备份任务已完成', time: '2026-05-24 18:00', read: true, type: 'info' },
-      { id: 4, title: '系统错误', content: '定时任务执行失败，请检查日志', time: '2026-05-23 22:45', read: true, type: 'error' },
+      {
+        id: 1,
+        title: '系统更新通知',
+        content: 'Admin Pro V2.0 已发布，新增多项功能',
+        time: '2026-05-26 14:30',
+        read: false,
+        type: 'info',
+      },
+      {
+        id: 2,
+        title: '安全提醒',
+        content: '检测到异常登录，请确认是否为本人操作',
+        time: '2026-05-25 09:15',
+        read: false,
+        type: 'warning',
+      },
+      {
+        id: 3,
+        title: '任务完成',
+        content: '数据备份任务已完成',
+        time: '2026-05-24 18:00',
+        read: true,
+        type: 'info',
+      },
+      {
+        id: 4,
+        title: '系统错误',
+        content: '定时任务执行失败，请检查日志',
+        time: '2026-05-23 22:45',
+        read: true,
+        type: 'error',
+      },
     ],
   }))
 
@@ -216,7 +325,14 @@ export function setupMock(axiosInstance: AxiosInstance) {
       id: i + 1,
       type: ['login', 'operation', 'system'][i % 3],
       level: ['info', 'warning', 'error'][i % 3],
-      content: ['用户 admin 登录系统', '修改了角色配置', '系统定时任务执行', '导出用户数据', '删除文件', '创建新用户'][i % 6],
+      content: [
+        '用户 admin 登录系统',
+        '修改了角色配置',
+        '系统定时任务执行',
+        '导出用户数据',
+        '删除文件',
+        '创建新用户',
+      ][i % 6],
       operator: 'admin',
       ip: `192.168.1.${100 + i}`,
       time: `2026-05-${String(26 - i).padStart(2, '0')} ${String(8 + (i % 12)).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}:00`,

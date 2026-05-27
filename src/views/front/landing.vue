@@ -42,12 +42,10 @@
         <a
           href="https://gao892947907.lemonsqueezy.com/checkout/buy/7af63e8e-bb13-4946-bf49-0a080797fc19"
           target="_blank"
-          style="text-decoration:none"
+          style="text-decoration: none"
           ><el-button size="large" round type="warning">🛒 Buy Now — $49</el-button></a
         >
-        <el-button size="large" round @click="$router.push('/pricing')">
-          View Pricing →
-        </el-button>
+        <el-button size="large" round @click="$router.push('/pricing')"> View Pricing → </el-button>
       </div>
       <!-- 演示账号提示 -->
       <div class="demo-hint">

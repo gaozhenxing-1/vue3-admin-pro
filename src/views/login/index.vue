@@ -10,7 +10,7 @@
     <div class="login-card">
       <!-- Logo -->
       <div class="login-header">
-        <img src="@/assets/logo.svg" class="login-logo" alt="logo">
+        <img src="@/assets/logo.svg" class="login-logo" alt="logo" />
         <h1 class="login-title">Admin Pro</h1>
         <p class="login-subtitle">{{ t('loginSubtitle') }}</p>
       </div>
@@ -18,7 +18,8 @@
       <!-- 快捷演示账号 -->
       <div class="demo-accounts">
         <span
-          v-for="acc in demoAccounts" :key="acc.role"
+          v-for="acc in demoAccounts"
+          :key="acc.role"
           class="demo-tag"
           :class="{ active: loginForm.role === acc.role }"
           @click="fillDemo(acc)"
@@ -28,7 +29,13 @@
       </div>
 
       <!-- 表单 -->
-      <el-form ref="loginFormRef" :model="loginForm" :rules="rules" class="login-form" @keyup.enter="handleLogin">
+      <el-form
+        ref="loginFormRef"
+        :model="loginForm"
+        :rules="rules"
+        class="login-form"
+        @keyup.enter="handleLogin"
+      >
         <el-form-item prop="username">
           <el-input
             v-model="loginForm.username"
@@ -111,7 +118,7 @@ const demoAccounts = [
   { role: 'guest', label: 'Guest', labelCN: '访客', username: 'guest', password: 'guest123' },
 ]
 
-function fillDemo(acc: typeof demoAccounts[0]) {
+function fillDemo(acc: (typeof demoAccounts)[0]) {
   loginForm.username = acc.username
   loginForm.password = acc.password
   loginForm.role = acc.role
@@ -129,11 +136,14 @@ async function handleLogin() {
       userStore.login(result.token, result.userInfo)
 
       if (rememberMe.value) {
-        localStorage.setItem('rememberedAccount', JSON.stringify({
-          username: loginForm.username,
-          password: loginForm.password,
-          role: loginForm.role,
-        }))
+        localStorage.setItem(
+          'rememberedAccount',
+          JSON.stringify({
+            username: loginForm.username,
+            password: loginForm.password,
+            role: loginForm.role,
+          }),
+        )
       } else {
         localStorage.removeItem('rememberedAccount')
       }
@@ -175,27 +185,40 @@ onMounted(() => {
   animation: float 20s infinite ease-in-out;
 }
 .bg-shape-1 {
-  width: 600px; height: 600px;
+  width: 600px;
+  height: 600px;
   background: radial-gradient(circle, #3b82f6, transparent 70%);
-  top: -200px; right: -150px;
+  top: -200px;
+  right: -150px;
 }
 .bg-shape-2 {
-  width: 400px; height: 400px;
+  width: 400px;
+  height: 400px;
   background: radial-gradient(circle, #8b5cf6, transparent 70%);
-  bottom: -100px; left: -100px;
+  bottom: -100px;
+  left: -100px;
   animation-delay: -7s;
 }
 .bg-shape-3 {
-  width: 300px; height: 300px;
+  width: 300px;
+  height: 300px;
   background: radial-gradient(circle, #06b6d4, transparent 70%);
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   animation-delay: -14s;
 }
 @keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -30px) scale(1.05); }
-  66% { transform: translate(-20px, 20px) scale(0.95); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
 }
 
 .login-card {
@@ -206,18 +229,39 @@ onMounted(() => {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 html.dark .login-card {
   background: rgba(30, 31, 33, 0.95);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.login-header { text-align: center; margin-bottom: 28px; }
-.login-logo { width: 48px; height: 48px; margin-bottom: 12px; }
-.login-title { font-size: 26px; font-weight: 700; color: var(--text-primary, #1e293b); margin: 0 0 4px; letter-spacing: -0.5px; }
-.login-subtitle { font-size: 13px; color: var(--text-secondary, #64748b); margin: 0; }
+.login-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.login-logo {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+}
+.login-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+}
+.login-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary, #64748b);
+  margin: 0;
+}
 
 /* 快捷演示账号 */
 .demo-accounts {
@@ -247,7 +291,9 @@ html.dark .login-card {
   font-weight: 600;
 }
 
-.login-form { margin-top: 4px; }
+.login-form {
+  margin-top: 4px;
+}
 
 .login-options {
   display: flex;
@@ -261,7 +307,9 @@ html.dark .login-card {
   text-decoration: none;
   font-size: 13px;
 }
-.forgot-link:hover { text-decoration: underline; }
+.forgot-link:hover {
+  text-decoration: underline;
+}
 
 .login-btn {
   width: 100%;
@@ -276,12 +324,16 @@ html.dark .login-card {
   margin-top: 20px;
   font-size: 13px;
 }
-.footer-text { color: var(--text-secondary, #94a3b8); }
+.footer-text {
+  color: var(--text-secondary, #94a3b8);
+}
 .footer-link {
   color: var(--el-color-primary);
   text-decoration: none;
   margin-left: 4px;
   font-weight: 500;
 }
-.footer-link:hover { text-decoration: underline; }
+.footer-link:hover {
+  text-decoration: underline;
+}
 </style>

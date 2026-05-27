@@ -8,9 +8,7 @@ export const useAppStore = defineStore('app', () => {
   const sidebarCollapsed = ref(false)
   const darkMode = ref(false)
   const fullscreen = ref(false)
-  const locale = ref<Locale>(
-    (localStorage.getItem('locale') as Locale) || currentLocale.value
-  )
+  const locale = ref<Locale>((localStorage.getItem('locale') as Locale) || currentLocale.value)
 
   const themeClass = computed(() => (darkMode.value ? 'dark' : ''))
 

@@ -2,7 +2,17 @@ import type { Router } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
 
-const whiteList = ['/login', '/register', '/forgot', '/404', '/403', '/landing', '/pricing', '/faq', '/contact']
+const whiteList = [
+  '/login',
+  '/register',
+  '/forgot',
+  '/404',
+  '/403',
+  '/landing',
+  '/pricing',
+  '/faq',
+  '/contact',
+]
 
 export function setupRouterGuard(router: Router) {
   router.beforeEach((to, _from, next) => {
@@ -35,7 +45,7 @@ export function setupRouterGuard(router: Router) {
     // RBAC 权限检查
     const requiredRoles = to.meta?.roles as string[] | undefined
     if (requiredRoles && requiredRoles.length > 0) {
-      const hasRole = requiredRoles.some(role => userStore.roles.includes(role))
+      const hasRole = requiredRoles.some((role) => userStore.roles.includes(role))
       if (!hasRole) {
         ElMessage.error('无访问权限')
         return next('/403')

@@ -13,7 +13,7 @@ export const useTagsStore = defineStore('tags', () => {
   const cachedRoutes = ref<string[]>([])
 
   function addTag(route: RouteLocationNormalized) {
-    const title = (route.meta?.title as string) || route.name as string || route.path
+    const title = (route.meta?.title as string) || (route.name as string) || route.path
     const exists = visitedTags.value.find((t) => t.path === route.path)
     if (!exists) {
       visitedTags.value.push({ path: route.path, title, query: route.query as Record<string, any> })
@@ -46,5 +46,14 @@ export const useTagsStore = defineStore('tags', () => {
     visitedTags.value = visitedTags.value.slice(0, idx + 1)
   }
 
-  return { visitedTags, cachedRoutes, addTag, removeTag, removeOtherTags, removeAllTags, closeLeftTags, closeRightTags }
+  return {
+    visitedTags,
+    cachedRoutes,
+    addTag,
+    removeTag,
+    removeOtherTags,
+    removeAllTags,
+    closeLeftTags,
+    closeRightTags,
+  }
 })
