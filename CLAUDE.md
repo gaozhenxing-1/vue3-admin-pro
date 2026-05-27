@@ -63,3 +63,66 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+---
+
+## 5. Project-Specific Rules (Admin Pro)
+
+### 5.1 Build Verification — MANDATORY
+
+After any code change, run ALL three checks. If any fail, fix before declaring done:
+
+```bash
+npx vue-tsc --noEmit    # TypeScript: must be 0 errors
+npx eslint src --ext .vue,.ts --fix   # ESLint: must be 0 errors (warnings ok)
+npx vite build          # Vite: must succeed
+```
+
+**Do not** rely on the dev server alone. Hot-reload can hide build-time errors.
+
+### 5.2 Don't Break Existing Features
+
+When modifying a file that has working functionality:
+- Search for ALL usages of a function/import before removing or renaming it
+- Example: changing `exportCSV` to `exportExcel` → search for `exportCSV` in the template, remove all references
+- Example: removing an import → verify no other line uses it
+- If a button calls `@click="foo"`, ensure `function foo()` exists
+
+### 5.3 Icons: Import + Register
+
+Every icon used in a route's `meta.icon` MUST appear in BOTH places:
+
+1. Import line in `src/layout/index.vue`:
+   ```
+   import { ..., NewIcon } from '@element-plus/icons-vue'
+   ```
+
+2. `iconMap` object:
+   ```
+   const iconMap = { ..., NewIcon }
+   ```
+
+Missing either = sidebar icon renders blank.
+
+### 5.4 i18n: Every User-Visible String
+
+Any new text visible to users needs entries in `src/locales/index.ts` in BOTH `zh-cn` and `en` sections:
+
+```ts
+'zh-cn': { myNewKey: '中文文本', ... },
+'en': { myNewKey: 'English Text', ... },
+```
+
+Use `{{ t('myNewKey') }}` in templates, `t('myNewKey')` in scripts.
+
+### 5.5 Route Structure
+
+- Nested routes (dashboard, widgets) go under `children: []` with parent holding only `meta`
+- Flat routes (table, form, editor, user, role, logs, files, messages, settings) stay at the same level as `screen`
+- Don't reorganize existing routes unless explicitly asked
+
+### 5.6 Tooling
+
+- **Prettier**: Always use local binary (`node_modules/.bin/prettier` or `npx --no-install prettier`). Global prettier (v1.x) is incompatible.
+- **Husky**: pre-commit hooks auto-run ESLint + Prettier. If a commit fails, read the error — don't bypass.
+- **Package manager**: Use `npm` with `--legacy-peer-deps`. Never `pnpm` or `yarn`.
